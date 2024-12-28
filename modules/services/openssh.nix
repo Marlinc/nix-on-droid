@@ -13,7 +13,12 @@ let
     ${lib.concatMapStrings (port: ''
       Port ${toString port}
     '') cfg.ports}
-    PasswordAuthentication no
+    ${lib.optionalString (!cfg.passwordAuthentication) ''
+      PasswordAuthentication no
+    ''}
+    ${lib.optionalString cfg.passwordAuthentication ''
+      PasswordAuthentication yes
+    ''}
     ${lib.flip lib.concatMapStrings cfg.hostKeys (k: ''
       HostKey ${k.path}
     '')}
@@ -78,6 +83,13 @@ in {
         '';
         type = types.bool;
         default = true;
+      };
+      passwordAuthentication = lib.mkOption {
+        description = ''
+          Whether to allow password authentication.
+        '';
+        type = types.bool;
+        default = false;
       };
       hostKeys = lib.mkOption {
         description = ''
