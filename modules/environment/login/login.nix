@@ -52,6 +52,7 @@ writeScript "login" ''
     -b ${installationDir}/etc:/etc! \
     -b ${installationDir}/tmp:/tmp \
     -b ${installationDir}/usr:/usr \
+    -b ${installationDir}/run:/run \
     -b ${installationDir}/dev/shm:/dev/shm \
     $BIND_PROC_STAT \
     $BIND_PROC_UPTIME \
